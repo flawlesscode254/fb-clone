@@ -34,6 +34,9 @@ function Feed() {
                     timestamp={post.data.timestamp}
                     username={post.data.username}
                     image={post.data.image}
+                    shared={post.data.shared}
+                    sharedTitle={post.data.sharedTitle}
+                    totalShares={post.data.totalShares}
                 />
             ))}
         </div>

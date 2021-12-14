@@ -4,10 +4,94 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import NearMeIcon from "@material-ui/icons/NearMe";
 import "./Post.css";
 import { Link } from "react-router-dom";
-import db from "./Firebase";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import { Button } from "@material-ui/core";
+import db, {auth} from "./Firebase";
+import firebase from "firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-function Post({ profilePic, image, username, timestamp, message, id }) {
+function Post({ profilePic, image, username, timestamp, message, id, sharedTitle, shared, totalShares }) {
   const [messages, setMessages] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [user] = useAuthState(auth);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const ids = open ? "simple-popover" : undefined;
+
+  const increment = firebase.firestore.FieldValue.increment(1)
+
+  const onlyText = () => {
+    db.collection("posts").add({
+      message: message,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      profilePic: user.photoURL,
+      username: user.displayName,
+      shared: true,
+      sharedTitle: `Shared from ${username}'s post`,
+      totalShares: 0
+    }).then(async () => {
+      await db.collection("posts").doc(id).update({
+        totalShares: increment
+      })
+      await handleClose()
+    })
+  }
+
+  const onlyImage = () => {
+    db.collection("posts").add({
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      profilePic: user.photoURL,
+      username: user.displayName,
+      image: image,
+      shared: true,
+      sharedTitle: `Shared from ${username}'s post`,
+      totalShares: 0
+    }).then(async () => {
+      await db.collection("posts").doc(id).update({
+        totalShares: increment
+      })
+      await handleClose()
+    })
+  }
+
+  const both = () => {
+    db.collection("posts").add({
+      message: message,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      profilePic: user.photoURL,
+      username: user.displayName,
+      image: image,
+      shared: true,
+      sharedTitle: `Shared from ${username}'s post`,
+      totalShares: 0
+    }).then(async () => {
+      await db.collection("posts").doc(id).update({
+        totalShares: increment
+      })
+      await handleClose()
+    })
+  }
+
+  const sharePost = () => {
+    if (image && !message) {
+      onlyImage()
+    }
+    else if (message && !image) {
+      onlyText()
+    }
+    else if (message && image) {
+      both()
+    }
+  }
 
   useEffect(() => {
     db.collection(id)
@@ -20,13 +104,19 @@ function Post({ profilePic, image, username, timestamp, message, id }) {
           }))
         );
       });
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
   return (
     <div className="post">
       <div className="post__top">
         <Avatar src={profilePic} className="post__avatar" />
         <div className="post__topInfo">
+          {shared && (
+            <p style={{
+              color: "red",
+              fontWeight: "bold"
+            }}>{sharedTitle}</p>
+          )}
           <h3>{username}</h3>
           <p>{new Date(timestamp?.toDate()).toUTCString()}</p>
         </div>
@@ -41,51 +131,60 @@ function Post({ profilePic, image, username, timestamp, message, id }) {
       </div>
 
       <div className="post__options">
-          <Link
+        <Link
           className="post__option"
+          style={{
+            textDecoration: "none",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+          }}
+          to={{
+            pathname: "/comments",
+            state: {
+              id: id,
+              username: username,
+            },
+          }}
+        >
+          <ChatBubbleOutlineIcon />
+          <p
             style={{
-              textDecoration: "none",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "row"
-            }}
-            to={{
-              pathname: "/comments",
-              state: {
-                id: id,
-                username: username,
-              },
+              marginLeft: 10,
             }}
           >
-            <ChatBubbleOutlineIcon />
-            <p style={{ 
-              marginLeft: 10
-             }}>{`${messages.length} Comments`}</p>
-          </Link>
+            {messages.length > 1 || messages.length === 0
+              ? `${messages.length} Comments`
+              : `${messages.length} Comment`}
+          </p>
+        </Link>
 
-          <Link
-          className="post__option"
+        <div onClick={handleClick} className="post__option">
+          <NearMeIcon />
+          <p
             style={{
-              textDecoration: "none",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "row"
+              marginLeft: 10,
             }}
-            to={{
-              pathname: "/comments",
-              state: {
-                id: id,
-                username: username,
-              },
+          >{totalShares === 0 || totalShares > 1 ? `${totalShares} Shares` : `${totalShares} Share`}</p>
+        </div>
+        <Popover
+            id={ids}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
             }}
           >
-            <NearMeIcon />
-            <p style={{ 
-              marginLeft: 10
-             }}>{`${messages.length} Shares`}</p>
-          </Link>
+            <Typography sx={{ p: 2 }}>
+              <Button style={{
+                marginRight: 20
+              }} color="secondary" variant="outlined" onClick={handleClose}>Cancel</Button>
+              <Button color="primary" variant="outlined" onClick={sharePost}>Share</Button>
+            </Typography>
+          </Popover>
       </div>
     </div>
   );

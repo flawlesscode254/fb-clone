@@ -91,6 +91,7 @@ function MessageSender() {
               profilePic: user.photoURL,
               username: user.displayName,
               image: url,
+              totalShares: 0
             });
             setImage(null);
             setInput("");

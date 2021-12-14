@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react'
 import './Feed.css'
 import MessageSender from './MessageSender'
 import Post from './Post'
-import StoryReel from './StoryReel'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from './Firebase'
+// import { useAuthState } from 'react-firebase-hooks/auth'
+// import { auth } from './Firebase'
 import db from './Firebase'
 
 function Feed() {
-    const [user] = useAuthState(auth)
+    // const [user] = useAuthState(auth)
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
@@ -25,11 +24,11 @@ function Feed() {
 
     return (
         <div className="feed">
-            <StoryReel />
             <MessageSender />
             {posts.map(post => (
                 <Post
                     key={post.id}
+                    id={post.id}
                     profilePic={post.data.profilePic}
                     message={post.data.message}
                     timestamp={post.data.timestamp}

@@ -4,7 +4,8 @@
     flex-direction: column;
     background-color: white;
     border-radius: 15px;
-    width: 100%;
+    width: 60%;
+    margin: 0 auto;
     box-shadow: 0px 5px 8px -9px rgba(0, 0, 0, 0.75);
 }
 
@@ -28,12 +29,11 @@
     background-color: #eff2f5;
 }
 
-.messageSender__top > form > button {
-    display: none;
-}
-
 .messageSender__input {
     flex: 1;
+    height: 35px;
+    outline: none;
+    border: none;
 }
 
 .messageSender__bottom {
@@ -45,6 +45,7 @@
     padding: 20px;
     display: flex;
     align-items: center;
+    justify-content: center;
     color: gray;
     margin: 5px;
 }
@@ -59,4 +60,18 @@
     background-color: #eff2f5;
     border-radius: 20px;
     cursor: pointer;
+}
+
+.main-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sendIcon {
+    cursor: pointer;
+}
+
+.post__image > img {
+    width: 100%;
 }

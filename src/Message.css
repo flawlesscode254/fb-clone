@@ -1,0 +1,23 @@
+.message{
+    padding: 5px;
+    margin: 5px;
+    width: fit-content;
+}
+
+.main{
+    width: 60%;
+    margin: 0 auto;
+}
+
+.message__guestCard{
+    background-color: rgb(2, 4, 75) !important;
+    color: white !important;
+}
+
+.profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    position: absolute;
+    left: 300px;
+}

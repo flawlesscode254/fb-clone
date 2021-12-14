@@ -27,7 +27,7 @@ function Comments() {
           data: doc.data()
         })))
     }) 
-        
+  // eslint-disable-next-line
 }, [] )
 
   const sendMessage = (e) => {

@@ -15,7 +15,7 @@ function Login() {
         <div className="login">
             <div className="login__logog">
                 <img 
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1365px-Facebook_f_logo_%282019%29.svg.png" 
+                    src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.6SvVS5_vHsTH2DLa8n2J8wHaFi%26pid%3DApi&f=1" 
                     alt="" 
                 />
             </div>

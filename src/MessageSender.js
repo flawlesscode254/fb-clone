@@ -25,7 +25,9 @@ function MessageSender() {
         message: input,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         profilePic: user.photoURL,
-        username: user.displayName
+        username: user.displayName,
+        shared: false,
+        totalShares: 0
       });
       setInput("");
       setCurrent("");
@@ -56,6 +58,8 @@ function MessageSender() {
               profilePic: user.photoURL,
               username: user.displayName,
               image: url,
+              shared: false,
+              totalShares: 0
             });
             setImage(null);
             setInput("");
@@ -91,6 +95,7 @@ function MessageSender() {
               profilePic: user.photoURL,
               username: user.displayName,
               image: url,
+              shared: false,
               totalShares: 0
             });
             setImage(null);
@@ -118,7 +123,7 @@ function MessageSender() {
     <div className="messageSender">
       <div className="messageSender__top">
         <Avatar src={user?.photoURL} />
-        <form className="main-form">
+        <form className="main-form" onSubmit={handleSubmit}>
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -149,7 +154,7 @@ function MessageSender() {
             onChange={handleFile}
             hidden
           />
-          <h3>Photo</h3>
+          <h3>File</h3>
         </div>
         {current > 0 && (
           <div className="messageSender__option">

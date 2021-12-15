@@ -1,13 +1,15 @@
 .App {
     text-align: center;
+    background-color: #020236
   }
   .app__form {
-    padding: 20px;
+    padding: 10px;
     position: fixed;
     bottom: 0;
     z-index: 1;
     background-color: #ebe9ea;
     width: 100%;
+    margin-top: 10px;
   }
   .app__formControl {
     display: flex !important;
@@ -27,4 +29,3 @@
     padding-top: 10px;
     margin-right: 50px;
   }
-  

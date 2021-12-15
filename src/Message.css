@@ -10,8 +10,8 @@
 }
 
 .message__guestCard{
-    background-color: rgb(2, 4, 75) !important;
-    color: white !important;
+    background-color: rgb(221, 218, 218);
+    color: rgb(15, 2, 46) !important;
 }
 
 .profile {

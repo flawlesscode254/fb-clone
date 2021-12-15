@@ -3,6 +3,7 @@ import './Header.css'
 import { Avatar, Button } from '@material-ui/core';
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from './Firebase'
+import icon from "./Untitled.png"
 
 function Header() {
     const [user] = useAuthState(auth)
@@ -13,6 +14,13 @@ function Header() {
 
     return (
         <div className="header">
+            <div className="header__right">
+                <div className="header__info">
+                    <img style={{
+                        height: 30
+                    }} src={icon} alt="icon" />
+                </div>
+            </div>
             <div className="header__right">
                 <div className="header__info">
                     <Avatar src={user?.photoURL} />

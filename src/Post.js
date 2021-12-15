@@ -10,6 +10,7 @@ import { Button } from "@material-ui/core";
 import db, {auth} from "./Firebase";
 import firebase from "firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import moment from "moment"
 
 function Post({ profilePic, image, username, timestamp, message, id, sharedTitle, shared, totalShares }) {
   const [messages, setMessages] = useState([]);
@@ -114,16 +115,23 @@ function Post({ profilePic, image, username, timestamp, message, id, sharedTitle
           {shared && (
             <p style={{
               color: "red",
-              fontWeight: "bold"
+              fontWeight: "bold",
+              textAlign: "left"
             }}>{sharedTitle}</p>
           )}
-          <h3>{username}</h3>
-          <p>{new Date(timestamp?.toDate()).toUTCString()}</p>
+          <h3 style={{
+            textAlign: "left"
+          }}>{username}</h3>
+          <p style={{
+            textAlign: "left"
+          }}>{moment(new Date(timestamp?.toDate()).toUTCString()).fromNow()}</p>
         </div>
       </div>
 
       <div className="post__bottom">
-        <p>{message}</p>
+        <p style={{
+            textAlign: "left"
+          }}>{message}</p>
       </div>
 
       <div className="post__image">
@@ -145,6 +153,8 @@ function Post({ profilePic, image, username, timestamp, message, id, sharedTitle
             state: {
               id: id,
               username: username,
+              profilePic: user?.photoURL,
+              myself: user?.displayName
             },
           }}
         >

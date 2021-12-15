@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import './Feed.css'
-import MessageSender from './MessageSender'
-import Post from './Post'
-// import { useAuthState } from 'react-firebase-hooks/auth'
-// import { auth } from './Firebase'
-import db from './Firebase'
+import PostCreator from '../postCreator/PostCreator'
+import Post from '../post/Post'
+import db from '../../Firebase'
 
 function Feed() {
-    // const [user] = useAuthState(auth)
     const [posts, setPosts] = useState([])
 
+    // Listener for fetching data from the database
     useEffect(() => {
         db
         .collection('posts')
@@ -24,7 +22,9 @@ function Feed() {
 
     return (
         <div className="feed">
-            <MessageSender />
+            {/*Displays the component where you can type a post*/}
+            <PostCreator />
+            {/*Displays the posts*/}
             {posts.map(post => (
                 <Post
                     key={post.id}

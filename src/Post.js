@@ -34,8 +34,8 @@ function Post({ profilePic, image, username, timestamp, message, id, sharedTitle
     db.collection("posts").add({
       message: message,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      profilePic: user.photoURL,
-      username: user.displayName,
+      profilePic: user?.photoURL,
+      username: user?.displayName,
       shared: true,
       sharedTitle: `Shared from ${username}'s post`,
       totalShares: 0
@@ -110,7 +110,7 @@ function Post({ profilePic, image, username, timestamp, message, id, sharedTitle
   return (
     <div className="post">
       <div className="post__top">
-        <Avatar src={profilePic} className="post__avatar" />
+        <Avatar src={profilePic ? profilePic : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.lkVN1WDlcV2jQCq-9LT7-wHaIJ%26pid%3DApi&f=1"} className="post__avatar" />
         <div className="post__topInfo">
           {shared && (
             <p style={{
@@ -152,9 +152,7 @@ function Post({ profilePic, image, username, timestamp, message, id, sharedTitle
             pathname: "/comments",
             state: {
               id: id,
-              username: username,
-              profilePic: user?.photoURL,
-              myself: user?.displayName
+              username: username
             },
           }}
         >

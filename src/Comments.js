@@ -8,7 +8,6 @@ import firebase from "firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import FlipMove from "react-flip-move";
 import Message from "./Message";
-import Header from "./Header";
 
 function Comments() {
   const [input, setInput] = useState("");
@@ -16,7 +15,7 @@ function Comments() {
 
   const [user] = useAuthState(auth);
   const location = useLocation();
-  const { id, username, profilePic, myself } = location.state;
+  const { id, username } = location.state;
 
   const dummy = useRef();
 
@@ -40,8 +39,8 @@ function Comments() {
       .add({
         comment: input,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        profilePic: profilePic,
-        username: myself,
+        profilePic: user?.photoURL,
+        username: user?.displayName,
       })
       .then(async () => {
         await setInput("");
@@ -51,7 +50,6 @@ function Comments() {
 
   return (
     <div className="App">
-      <Header />
       <p
         style={{
           color: "white",

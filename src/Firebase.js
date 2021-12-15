@@ -1,13 +1,18 @@
 import firebase from 'firebase'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAEHbHjGjRx-9kBskih9Zk0kH_E7sb2KYE",
-    authDomain: "facebook-cl-a5921.firebaseapp.com",
-    projectId: "facebook-cl-a5921",
-    storageBucket: "facebook-cl-a5921.appspot.com",
-    messagingSenderId: "195078134406",
-    appId: "1:195078134406:web:2da35ea8709952efcb8f07",
-    measurementId: "G-E6416SNT8B"
+  apiKey: "AIzaSyCW4xlcFFCZ3TsyXIlcKiGTMPikWOaAhmg",
+
+  authDomain: "music-chat-forum.firebaseapp.com",
+
+  projectId: "music-chat-forum",
+
+  storageBucket: "music-chat-forum.appspot.com",
+
+  messagingSenderId: "26203601931",
+
+  appId: "1:26203601931:web:d1a898bcb12b42ef61db0e"
+
   };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig)
